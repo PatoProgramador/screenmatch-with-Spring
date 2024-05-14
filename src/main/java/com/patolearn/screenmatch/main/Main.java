@@ -8,6 +8,8 @@ import com.patolearn.screenmatch.service.ConsumoAPI;
 import com.patolearn.screenmatch.service.Conversor;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -68,5 +70,21 @@ public class Main {
                 .collect(Collectors.toList());
 
         episodios.forEach(System.out::println);
+
+        // Busqueda de episodios a partir de x año
+        System.out.println("Por favor indica el año a partir del cual deseas ver los episodios: ");
+        int fecha = SCANNER.nextInt();
+        SCANNER.nextLine();
+
+        LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        episodios.stream()
+                .filter(e -> e.getFechaDeLanzamiento() != null && e.getFechaDeLanzamiento().isAfter(fechaBusqueda))
+                .forEach(e -> System.out.println(
+                        "Temporada: " + e.getTemporada() +
+                                "Episodio: " + e.getTitulo() +
+                                " Fecha de Lanzamiento " + e.getFechaDeLanzamiento().format(dtf)
+                ));
     }
 }
