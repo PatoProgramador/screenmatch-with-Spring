@@ -43,7 +43,7 @@ public class Main {
 //                System.out.println(episodiosTemporada.get(j).titulo());
 //            }
 //        }
-        // uso de funcion lambda
+        // uso de expresión lambda
         temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
     }
 }
