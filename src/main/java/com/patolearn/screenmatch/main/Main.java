@@ -21,6 +21,7 @@ public class Main {
     private final String URL_BASE = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=" + DOTENV.get("API_KEY");
     private Conversor conversor = new Conversor();
+    private List<DatosSerie> datosSeries = new ArrayList<>();
 
     public void mostrarMenu() {
         int opcion = -1;
@@ -28,7 +29,7 @@ public class Main {
             String menu = """
                     1 - Buscar series.
                     2 - Buscar episodios.
-                    
+                    3 - Mostrar historial de series buscadas.
                     0 - Salir.
                     """;
             System.out.println(menu);
@@ -41,6 +42,9 @@ public class Main {
                     break;
                 case 2:
                     buscarEpisodioPorSerie();
+                    break;
+                case 3:
+                    mostrarHistorialSeries();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -73,6 +77,12 @@ public class Main {
     }
 
     private void buscarSerieWeb() {
+        DatosSerie datos = getDatosSerie();
+        datosSeries.add(datos);
+        System.out.println(datos);
+    }
 
+    private void mostrarHistorialSeries() {
+        datosSeries.forEach(System.out::println);
     }
 }
