@@ -1,9 +1,6 @@
 package com.patolearn.screenmatch.main;
 
-import com.patolearn.screenmatch.model.DatosEpisodio;
-import com.patolearn.screenmatch.model.DatosSerie;
-import com.patolearn.screenmatch.model.DatosTemporada;
-import com.patolearn.screenmatch.model.Episodio;
+import com.patolearn.screenmatch.model.*;
 import com.patolearn.screenmatch.service.ConsumoAPI;
 import com.patolearn.screenmatch.service.Conversor;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -83,6 +80,14 @@ public class Main {
     }
 
     private void mostrarHistorialSeries() {
-        datosSeries.forEach(System.out::println);
+        List<Serie> series = new ArrayList<>();
+
+        series = datosSeries.stream()
+                .map(d -> new Serie(d))
+                .collect(Collectors.toList());
+
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
     }
 }
