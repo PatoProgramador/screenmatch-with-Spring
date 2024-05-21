@@ -1,9 +1,5 @@
 package com.patolearn.screenmatch.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import jdk.jfr.Category;
-
-import java.util.Optional;
 import java.util.OptionalDouble;
 
 public class Serie {
@@ -22,7 +18,7 @@ public class Serie {
         this.poster = datosSerie.poster();
         this.genero =  Categoria.fromString(datosSerie.genero().split(",")[0].trim());
         this.actores = datosSerie.actores();
-        this.sinopsis = datosSerie.sinopsis();
+        this.sinopsis =  datosSerie.sinopsis();
     }
 
     public String getTitulo() {

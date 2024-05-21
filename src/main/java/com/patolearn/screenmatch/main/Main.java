@@ -5,9 +5,6 @@ import com.patolearn.screenmatch.service.ConsumoAPI;
 import com.patolearn.screenmatch.service.Conversor;
 import io.github.cdimascio.dotenv.Dotenv;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
