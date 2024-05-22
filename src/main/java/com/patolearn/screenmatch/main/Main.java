@@ -1,6 +1,7 @@
 package com.patolearn.screenmatch.main;
 
 import com.patolearn.screenmatch.model.*;
+import com.patolearn.screenmatch.repository.SerieRepository;
 import com.patolearn.screenmatch.service.ConsumoAPI;
 import com.patolearn.screenmatch.service.Conversor;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -16,6 +17,11 @@ public class Main {
     private final String API_KEY = "&apikey=" + DOTENV.get("API_KEY");
     private Conversor conversor = new Conversor();
     private List<DatosSerie> datosSeries = new ArrayList<>();
+    private SerieRepository repository;
+
+    public Main(SerieRepository repository) {
+        this.repository = repository;
+    }
 
     public void mostrarMenu() {
         int opcion = -1;
@@ -72,16 +78,19 @@ public class Main {
 
     private void buscarSerieWeb() {
         DatosSerie datos = getDatosSerie();
-        datosSeries.add(datos);
+//        datosSeries.add(datos);
+        Serie serie = new Serie(datos);
+        repository.save(serie);
         System.out.println(datos);
     }
 
     private void mostrarHistorialSeries() {
-        List<Serie> series = new ArrayList<>();
-
-        series = datosSeries.stream()
-                .map(d -> new Serie(d))
-                .collect(Collectors.toList());
+        List<Serie> series = repository.findAll();
+//        List<Serie> series = new ArrayList<>();
+//
+//        series = datosSeries.stream()
+//                .map(d -> new Serie(d))
+//                .collect(Collectors.toList());
 
         series.stream()
                 .sorted(Comparator.comparing(Serie::getGenero))

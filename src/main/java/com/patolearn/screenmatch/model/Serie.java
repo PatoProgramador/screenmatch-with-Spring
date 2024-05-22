@@ -1,15 +1,29 @@
 package com.patolearn.screenmatch.model;
 
+import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.OptionalDouble;
 
+@Entity
+@Table(name = "serie")
 public class Serie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
     private String titulo;
     private Integer totalTemporadas;
     private Double evaluacion;
+    @Enumerated(EnumType.STRING)
     private Categoria genero;
     private String sinopsis;
     private String poster;
     private String actores;
+    @Transient
+    private List<Episodio> episodios;
+
+    public Serie() {};
 
     public Serie(DatosSerie datosSerie) {
         this.titulo = datosSerie.titulo();
@@ -19,6 +33,14 @@ public class Serie {
         this.genero =  Categoria.fromString(datosSerie.genero().split(",")[0].trim());
         this.actores = datosSerie.actores();
         this.sinopsis =  datosSerie.sinopsis();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
