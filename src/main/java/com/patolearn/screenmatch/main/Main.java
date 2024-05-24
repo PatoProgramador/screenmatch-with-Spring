@@ -31,6 +31,7 @@ public class Main {
                     1 - Buscar series.
                     2 - Buscar episodios.
                     3 - Mostrar historial de series buscadas.
+                    4 - Buscar series por título.
                     0 - Salir.
                     """;
             System.out.println(menu);
@@ -46,6 +47,9 @@ public class Main {
                     break;
                 case 3:
                     mostrarHistorialSeries();
+                    break;
+                case 4:
+                    buscarSeriePorTitulo();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -115,5 +119,17 @@ public class Main {
         series.stream()
                 .sorted(Comparator.comparing(Serie::getGenero))
                 .forEach(System.out::println);
+    }
+
+    private void buscarSeriePorTitulo() {
+        System.out.println("Escribe el nombre de la serie que deseas buscar: ");
+        String nombreSerie = SCANNER.nextLine();
+        Optional<Serie> serieBuscada = repository.findByTituloContainsIgnoreCase(nombreSerie);
+
+        if (serieBuscada.isPresent()) {
+            System.out.println("La serie buscada es: " + serieBuscada.get());
+        } else {
+            System.out.println("Serie no encontrada :(");
+        }
     }
 }
