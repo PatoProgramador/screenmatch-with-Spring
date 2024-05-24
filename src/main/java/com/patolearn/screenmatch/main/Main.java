@@ -32,6 +32,7 @@ public class Main {
                     2 - Buscar episodios.
                     3 - Mostrar historial de series buscadas.
                     4 - Buscar series por título.
+                    5 - Top 5 mejores series.
                     0 - Salir.
                     """;
             System.out.println(menu);
@@ -51,6 +52,9 @@ public class Main {
                 case 4:
                     buscarSeriePorTitulo();
                     break;
+                case 5:
+                    buscarTop5Series();
+                    break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
                     break;
@@ -59,6 +63,7 @@ public class Main {
             }
         }
     }
+
 
     private DatosSerie getDatosSerie() {
         System.out.println("Escribe el nombre de la serie que deseas buscar: ");
@@ -131,5 +136,11 @@ public class Main {
         } else {
             System.out.println("Serie no encontrada :(");
         }
+    }
+
+    private void buscarTop5Series() {
+        List<Serie> topSeries = repository.findTop5ByOrderByEvaluacionDesc();
+
+        topSeries.forEach(s -> System.out.println("Serie: " + s.getTitulo() + ", Evaluacion: " + s.getEvaluacion()));
     }
 }
