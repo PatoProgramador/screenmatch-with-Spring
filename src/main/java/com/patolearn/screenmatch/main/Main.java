@@ -33,6 +33,7 @@ public class Main {
                     3 - Mostrar historial de series buscadas.
                     4 - Buscar series por título.
                     5 - Top 5 mejores series.
+                    6 - Buscar series por categoria.
                     0 - Salir.
                     """;
             System.out.println(menu);
@@ -55,6 +56,9 @@ public class Main {
                 case 5:
                     buscarTop5Series();
                     break;
+                case 6:
+                    buscarSeriePorCategoria();
+                    break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
                     break;
@@ -63,7 +67,6 @@ public class Main {
             }
         }
     }
-
 
     private DatosSerie getDatosSerie() {
         System.out.println("Escribe el nombre de la serie que deseas buscar: ");
@@ -142,5 +145,15 @@ public class Main {
         List<Serie> topSeries = repository.findTop5ByOrderByEvaluacionDesc();
 
         topSeries.forEach(s -> System.out.println("Serie: " + s.getTitulo() + ", Evaluacion: " + s.getEvaluacion()));
+    }
+
+    private void buscarSeriePorCategoria() {
+        System.out.println("Escribe el genero/categoria de la serie que desea buscar: ");
+        String genero = SCANNER.nextLine();
+        Categoria categoria = Categoria.fromEspanol(genero);
+
+        List<Serie> seriesPorCategoria = repository.findByGenero(categoria);
+        System.out.println("Las series de la categoria " + genero);
+        seriesPorCategoria.forEach(System.out::println);
     }
 }
