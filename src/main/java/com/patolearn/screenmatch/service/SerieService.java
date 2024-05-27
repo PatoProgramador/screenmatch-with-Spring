@@ -1,5 +1,6 @@
 package com.patolearn.screenmatch.service;
 
+import com.patolearn.screenmatch.dto.EpisodioDTO;
 import com.patolearn.screenmatch.dto.SerieDTO;
 import com.patolearn.screenmatch.model.Serie;
 import com.patolearn.screenmatch.repository.SerieRepository;
@@ -34,6 +35,17 @@ public class SerieService {
             return new SerieDTO(s.getId(), s.getTitulo(), s.getTotalTemporadas(),
                     s.getEvaluacion(), s.getGenero(),
                     s.getSinopsis(), s.getPoster(), s.getActores());
+        }
+        return null;
+    }
+
+    public List<EpisodioDTO> obtenerTodasLasTemporadas(Long id) {
+        Optional<Serie> serie = serieRepository.findById(id);
+        if (serie.isPresent()) {
+            Serie s = serie.get();
+            return s.getEpisodios().stream()
+                    .map(e -> new EpisodioDTO(e.getTemporada(), e.getTitulo(), e.getNumeroEpisodio()))
+                    .collect(Collectors.toList());
         }
         return null;
     }
