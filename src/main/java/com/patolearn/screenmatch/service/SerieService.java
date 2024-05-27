@@ -2,6 +2,7 @@ package com.patolearn.screenmatch.service;
 
 import com.patolearn.screenmatch.dto.EpisodioDTO;
 import com.patolearn.screenmatch.dto.SerieDTO;
+import com.patolearn.screenmatch.model.Categoria;
 import com.patolearn.screenmatch.model.Serie;
 import com.patolearn.screenmatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,11 @@ public class SerieService {
         return serieRepository.obtenerTemporadasPorNumero(id, numeroTemporada).stream()
                 .map(e -> new EpisodioDTO(e.getTemporada(), e.getTitulo(), e.getNumeroEpisodio()))
                 .collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> obtenerSeriesPorCategoria(String nombreGenero) {
+        Categoria categoria = Categoria.fromEspanol(nombreGenero);
+        return conversorDto(serieRepository.findByGenero(categoria));
     }
 
     public List<SerieDTO> conversorDto(List<Serie> series) {
