@@ -17,20 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-public class ScreenmatchApplication implements CommandLineRunner {
-
-	@Autowired
-	private SerieRepository repository;
+public class ScreenmatchApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ScreenmatchApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		Main main = new Main(repository);
-		main.mostrarMenu();
-
-//		EjemploStreams ejemploStreams = new EjemploStreams();
-//		ejemploStreams.muestraEjemplo();
 	}
 }
