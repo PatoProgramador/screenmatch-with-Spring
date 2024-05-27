@@ -50,6 +50,12 @@ public class SerieService {
         return null;
     }
 
+    public List<EpisodioDTO> obtenerTemporadasPorNumero(Long id, Long numeroTemporada) {
+        return serieRepository.obtenerTemporadasPorNumero(id, numeroTemporada).stream()
+                .map(e -> new EpisodioDTO(e.getTemporada(), e.getTitulo(), e.getNumeroEpisodio()))
+                .collect(Collectors.toList());
+    }
+
     public List<SerieDTO> conversorDto(List<Serie> series) {
         return series.stream()
                 .map(s -> new SerieDTO(s.getId(), s.getTitulo(), s.getTotalTemporadas(),
